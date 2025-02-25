@@ -1,0 +1,19 @@
+name: Docker Image Build & Push
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERTOKEN }}" | docker login -u xero2808 --password-stdin
+
+      - name: Build Docker Image
+        run: docker build -t xero2808/fastapi-docker-cd:latest .
+
+      - name: Push Docker Image
+        run: docker push xero2808/fastapi-docker-cd:latest
